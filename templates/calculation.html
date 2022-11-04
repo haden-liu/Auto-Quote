@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Freight Calculator</h1>
+
+    <nav class = 'navBar'>
+        <ul>
+            <li><a href="calculation">Rate Calculation</a></li>
+            <li><a href="addrate">Add Rate</a></li>
+            <li><a href="contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <form action="calcuation_result" method = "post">
+        <label for="">Port of Loading</label>
+        <input type="text" name="loadingport">
+        <br>
+        <label for="">Port of Discharge</label>
+        <input type="text" name = "dischargingport">
+        <br>
+        <div class="lwh">
+        <label for="">Length (CM)</label>
+        <input type="number" name = "length">
+        <label for="">Width (CM)</label>
+        <input type="number" name = "width">
+        <label for="">Height (CM)</label>
+        <input type="number" name = "height">
+        </div>
+        <label for="">Weight in KG</label>
+        <input type="number" name = "weight">
+        <br>
+
+        <input type="submit">
+        
+
+    </form>
+
+
+
+</body>
+</html>
