@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Freight Calculator</h1>
+
+    <nav class = 'navBar'>
+        <ul>
+            <li><a href="calculation">Rate Calculation</a></li>
+            <li><a href="addrate">Add Rate</a></li>
+            <li><a href="contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <form action="addrate" method = "post">
+        <div class="lwh">
+        <label for="">Port of Loading</label>
+        <input type="text" name="loadingport">
+        <br>
+        <label for="">Port of Discharge</label>
+        <input type="text" name = "dischargingport">
+        <br>
+        <label for="">carrier</label>
+        <input type="text" name = "carrier">
+        </div>
+        <br>
+        <div class ='lwh'>
+        <label for="">Minimum Rate</label>
+        <input type="float" name = "minimum_rate">
+        <br>
+        <label for="">Unit Rate</label>
+        <input type="float" name = "unit_rate">
+        </br>
+        <br>
+        <label for="">Fuel Rate</label>
+        <input type="float" name = "fuel_rate">
+        </div>
+        <br>
+        <label for="">Valid Date</label>
+        <input type="date" name = "valid_date">
+        </br>
+
+    
+        <input type="submit">
+        
+    </form>
+
+</body>
+</html>
