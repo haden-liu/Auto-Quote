@@ -1,7 +1,12 @@
 import psycopg2
-import pdfkit
+import csv
+import pandas as pd
+from werkzeug.utils import secure_filename
+
 
 from flask import Flask, render_template, request, redirect
+
+UPLOAD_FOLDER = '/Users/hangliu/Documents/files'
 app = Flask(__name__)
 
 @app.route('/')
@@ -77,5 +82,54 @@ def addrate():
     conn.close()
     
     return render_template('addrate.html')
+
+@app.route('/manage', methods = ['POST','GET'])
+def manage():
+
+        conn = psycopg2.connect('dbname = freight')
+        cur =conn.cursor()
+
+        cur.execute('select * from rates where carrier is not null')
+
+        results = cur.fetchall()
+
+        print(results)
+
+        cur.close()
+        conn.close()
+
+        return render_template('manage.html')
+
+
+
+
+
+@app.route('/upload_rate', methods=['POST', 'GET'])
+def upload_rate():
+
+    # upload_file = request.files('file')
+    # upload_file.save(secure_filename(upload_file.filename))
+
+
+    df = pd.read_excel("Book1.xlsx")
+    print(df)
+    print(df['carrier'][0])
+
+    conn = psycopg2.connect('dbname = freight')
+    cur =conn.cursor()
+
+    for i in range(len(df)):
+
+        print(df.loc[i, "carrier"], df.loc[i, "valid_date"])
+        cur.execute('INSERT INTO rates (carrier,freight_rate_min,freight_rate_unit,fuel_rate,loading_port,discharging_port,valid_date) values (%s,%s,%s,%s,%s,%s,%s)', [df.loc[i, "carrier"], float(df.loc[i, "freight_rate_min"]),float(df.loc[i, "freight_rate_unit"]),float(df.loc[i, "fuel_rate"]),df.loc[i, "loading_port"],df.loc[i, "discharging_port"],df.loc[i, "valid_date"]])
+
+    conn.commit()
+
+    return render_template('addrate.html')
+
+
+
+
+
 
 app.run(debug=True)
