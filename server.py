@@ -1,6 +1,7 @@
 import psycopg2
 import csv
 import pandas as pd
+import numpy as np
 from werkzeug.utils import secure_filename
 
 
@@ -28,6 +29,17 @@ def calcuation_result():
     height = request.form.get('height')
     weight = request.form.get('weight')
     amount = request.form.get('amount')
+    
+    lenList= request.form.getlist('length')
+    widthList = request.form.getlist('width')
+    
+    print(lenList)
+    print(widthList)
+
+    multiply = []
+    for value1, value2 in zip(lenList, widthList):
+        multiply.append(float(value1) * float(value2))
+    print(multiply)
 
     volume_unit = float(length) * float(width )* float(height) / 1000000
     total_volume = volume_unit * int(amount)

@@ -26,21 +26,48 @@
         <input type="text" name = "dischargingport">
         <br>
         <div class="lwh">
-        <label for="">Length (CM)</label>
-        <input type="float" name = "length">
-        <label for="">Width (CM)</label>
-        <input type="float" name = "width">
-        <label for="">Height (CM)</label>
-        <input type="float" name = "height">
-        <label for="">Package Amount</label>
-        <input type="number" name = "amount">
+            <div id = "firstForm">
+            <label for="">Length (CM)</label>
+            <input type="float" name = "length">
+            <label for="">Width (CM)</label>
+            <input type="float" name = "width">
+            <label for="">Height (CM)</label>
+            <input type="float" name = "height">
+            <label for="">Package Amount</label>
+            <input type="number" name = "amount">
+            <label for=""> Weight in KG</label>
+            <input type="float" name = "weight">
+            <input type="button" value = "Add Item" onclick = "addNewItem()">
+            </div>
+            <br>
+            <div id = 'newAddedItem'>
+            </div>
+
         </div>
-        <label for="">Weight in KG</label>
-        <input type="float" name = "weight">
+
+
         <br>
         <input type="submit">
         
     </form>
-
+    
+    <script>
+        function addNewItem() {
+            var newLWH = document.createElement('div');
+            newLWH.innerHTML = "<label for=''>Length (CM)</label>"  +
+                            "<input type='float' name = 'length'>" +
+                            "<label for=''>Width (CM)</label>" +
+                            "<input type='float' name = 'width'>" +
+                            "<label for=''>Height (CM)</label>" +
+                            "<input type=float name = 'height'>" +
+                            "<label for=''>Package Amount</label>" +
+                            "<input type='number' name = 'amount'>" +
+                            "<label for=''> Weight in KG</label>" +
+                            "<input type='float' name = 'weight'>"
+                            "<input type='button' value = 'Add Item' onclick = 'addNewItem()'>" +
+                            "<br>"
+            document.getElementById('newAddedItem').appendChild(newLWH)
+        }
+    </script>
 </body>
 </html>

@@ -69,13 +69,30 @@ input[type=text] {
   }
 
   .lwh {
+    display: grid;
+    grid-template-columns: repeat(5 20%); 
+   
+  }
+
+  #firstForm {
     display: flex;
     flex-direction: row;
-    margin: 20px 0;
+
   }
+
+  #newAddedItem div {
+    display: flex;
+    flex-direction: row;
+
+  }
+
 
   .lwh label {
     margin: 15px;
+  }
+
+  input[type=button] {
+    margin: 20px;
   }
 
 
