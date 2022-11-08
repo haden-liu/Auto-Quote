@@ -24,29 +24,60 @@ def calculation():
 def calcuation_result():
     loading_port = request.form.get('loadingport')
     discharge_port = request.form.get('dischargingport')
-    length = request.form.get('length')
-    width = request.form.get('width')
-    height = request.form.get('height')
-    weight = request.form.get('weight')
-    amount = request.form.get('amount')
+    # length = request.form.get('length')
+    # width = request.form.get('width')
+    # height = request.form.get('height')
+    # weight = request.form.get('weight')
+    # amount = request.form.get('amount')
     
     lenList= request.form.getlist('length')
     widthList = request.form.getlist('width')
+    heightList = request.form.getlist('height')
+    weightList = request.form.getlist('weight')
+    amountList = request.form.getlist('amount')
+
+    intAmtList = [int(x) for x in amountList]
+    amount = sum(intAmtList)
     
     print(lenList)
     print(widthList)
+    print(heightList)
+    print(amountList)
+    
 
-    multiply = []
+    LWList = []
     for value1, value2 in zip(lenList, widthList):
-        multiply.append(float(value1) * float(value2))
-    print(multiply)
+        LWList.append(float(value1) * float(value2))
+    print(LWList)
 
-    volume_unit = float(length) * float(width )* float(height) / 1000000
-    total_volume = volume_unit * int(amount)
-    total_weight = float(weight) * int(amount)
+    unitVolumeList = []
+    for lw, h in zip(LWList, heightList):
+        unitVolumeList.append(float(lw) * float(h))
+    print(unitVolumeList)
 
+    total_vol_list = []
+    for vol, amt in zip(unitVolumeList, amountList):
+        total_vol_list.append(float(vol) * int(amt))
+    print(total_vol_list)
+
+    total_weight_list = []
+    for wet, amt in zip(weightList, amountList):
+        total_weight_list.append(float(wet) * int(amt))
+    print(total_weight_list)
+
+
+    # volume_unit = float(length) * float(width )* float(height) / 1000000
+    # total_volume = volume_unit * int(amount)
+    # total_weight = float(weight) * int(amount)
+
+    total_volume = sum(total_vol_list) / 1000000
     print(total_volume)
+
+    total_weight = sum(total_weight_list)
     print(total_weight)
+
+    # print(total_volume)
+    # print(total_weight)
 
    
     conn = psycopg2.connect('dbname = freight')
@@ -54,9 +85,17 @@ def calcuation_result():
 
     cur.execute('select carrier, freight_rate_min, freight_rate_unit, fuel_rate, valid_date from rates where loading_port = %s and discharging_port = %s', [loading_port,discharge_port])
     result = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
     print(result)
 
+    if result == None:
+        return redirect('/')
+
+
     carrier, freight_rate_min, freight_rate_unit, fuel_rate, valid_date = result
+   
 
     if freight_rate_min > max(total_volume * 1000 / 6 * freight_rate_unit, total_weight  * freight_rate_unit):
         total_rate = freight_rate_min

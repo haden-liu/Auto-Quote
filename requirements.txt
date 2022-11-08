@@ -1,0 +1,6 @@
+psycopg2
+csv
+pandas
+numpy
+werkzeug.utils
+flask
