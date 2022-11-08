@@ -3,11 +3,13 @@ import csv
 import pandas as pd
 import numpy as np
 from werkzeug.utils import secure_filename
+import os
 
 
 from flask import Flask, render_template, request, redirect
 
-UPLOAD_FOLDER = '/Users/hangliu/Documents/files'
+DB_URL = os.environ.get('DATABASE_URL', 'dbname=freight')
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -80,7 +82,7 @@ def calcuation_result():
     # print(total_weight)
 
    
-    conn = psycopg2.connect('dbname = freight')
+    conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
 
     cur.execute('select carrier, freight_rate_min, freight_rate_unit, fuel_rate, valid_date from rates where loading_port = %s and discharging_port = %s', [loading_port,discharge_port])
@@ -122,7 +124,7 @@ def addrate():
     print(discharging_port)
 
 
-    conn = psycopg2.connect('dbname = freight')
+    conn = psycopg2.connect(DB_URL)
     cur =conn.cursor()
 
     cur.execute('INSERT INTO rates (carrier,freight_rate_min,freight_rate_unit,fuel_rate,loading_port,discharging_port,valid_date) values (%s,%s,%s,%s,%s,%s,%s)', [carrier, minimum_rate,unit_rate,fuel_rate,loading_port,discharging_port,valid_date])
@@ -137,7 +139,7 @@ def addrate():
 @app.route('/manage', methods = ['POST','GET'])
 def manage():
 
-        conn = psycopg2.connect('dbname = freight')
+        conn = psycopg2.connect(DB_URL)
         cur =conn.cursor()
 
         cur.execute('select * from rates where carrier is not null')
@@ -182,5 +184,5 @@ def upload_rate():
 
 
 
-
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
