@@ -19,6 +19,31 @@
         </ul>
     </nav>
 
+    <table>
+        <tr>
+            <th>Carrier</th>
+            <th>POL</th>
+            <th>POD</th>
+            <th>Minimum Rate</th>
+            <th>Unit Rate</th>
+            <th>Valid Date</th>
+        </tr>
+
+            {% for id, carrier, loading_port, discharging_port, freight_rate_min, freight_rate_unit, valid_date in freight_items %}
+                <tr>
+                    <td>{{carrier}}</td>
+                    <td>{{loading_port}}</td>
+                    <td>{{discharging_port}}</td>
+                    <td>{{freight_rate_min}}</td>
+                    <td>{{freight_rate_unit}}</td>
+                    <td>{{valid_date}}</td>
+                    <td><button><a href="{{url_for('delete', id = id)}}">Delete</a></button></td>
+                </tr>
+            {% endfor %}
+    </table>
+
+    
+
     
 </body>
 </html>

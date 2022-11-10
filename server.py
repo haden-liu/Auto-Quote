@@ -6,7 +6,9 @@ from werkzeug.utils import secure_filename
 import os
 
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
+import flask_excel as excel
+
 
 DB_URL = os.environ.get('DATABASE_URL', 'dbname=freight')
 
@@ -142,17 +144,35 @@ def manage():
         conn = psycopg2.connect(DB_URL)
         cur =conn.cursor()
 
-        cur.execute('select * from rates where carrier is not null')
+        cur.execute('select id, carrier,loading_port, discharging_port, freight_rate_min, freight_rate_unit, valid_date from rates where carrier is not null')
 
         results = cur.fetchall()
 
-        print(results)
+        # print(results)
 
         cur.close()
         conn.close()
 
-        return render_template('manage.html')
+        freight_items = []
 
+        for row in results:
+            id, carrier, loading_port, discharging_port, freight_rate_min, freight_rate_unit, valid_date = row
+            freight_items.append([id, carrier, loading_port, discharging_port, freight_rate_min, freight_rate_unit, valid_date])
+        print(freight_items)
+        return render_template('manage.html', freight_items = freight_items)
+
+@app.route('/delete/<id>', methods = ['POST','GET'])
+def delete(id):
+        conn = psycopg2.connect(DB_URL)
+        cur =conn.cursor()
+
+        cur.execute('Delete from rates where id = %s', [id])
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return redirect('/addrate')
 
 
 
@@ -162,6 +182,8 @@ def upload_rate():
 
     # upload_file = request.files('file')
     # upload_file.save(secure_filename(upload_file.filename))
+    # if request.method == "POST":
+    #     return jsonify({"result": request.get_array(field_name='file')})
 
 
     df = pd.read_excel("Book1.xlsx")
@@ -185,4 +207,5 @@ def upload_rate():
 
 
 if __name__ == '__main__':
+    excel.init_excel(app)
     app.run(debug=True)
