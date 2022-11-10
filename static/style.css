@@ -13,7 +13,9 @@ nav > ul > li {
 }
 
 form {
-  margin: 20px
+  margin: 20px;
+  
+  
 }
 
 input[type=text] {
@@ -69,8 +71,9 @@ input[type=text] {
   }
 
   .lwh {
-    display: grid;
-    grid-template-columns: repeat(5 20%); 
+    display: flex;
+    flex-wrap: wrap;
+    /* grid-template-columns: repeat(5 20%);  */
    
   }
 
