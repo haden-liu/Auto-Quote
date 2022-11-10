@@ -174,8 +174,8 @@ def delete(id):
 
         return redirect('/addrate')
 
-@app.route('/edit/<id>', methods = ['POST','GET'])
-def edit(id):
+# @app.route('/edit/<id>', methods = ['POST','GET'])
+# def edit(id):
 
 
 
@@ -217,5 +217,4 @@ def edit(id):
 
 
 if __name__ == '__main__':
-    excel.init_excel(app)
     app.run(debug=True)
