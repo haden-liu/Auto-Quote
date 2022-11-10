@@ -176,7 +176,7 @@ def delete(id):
 
 @app.route('/edit/<id>', methods = ['POST','GET'])
 def edit(id):
-    
+
 
 
 
@@ -189,9 +189,9 @@ def upload_rate():
     if request.method == "POST":
         json_response = jsonify({"result": request.get_array(field_name='file')})
     
-        json_result = json_response.json()
         
-        print(json_result)
+        
+        print(json_response)
 
 
 
