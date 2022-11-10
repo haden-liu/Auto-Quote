@@ -5,7 +5,6 @@ import numpy as np
 from werkzeug.utils import secure_filename
 import os
 
-
 from flask import Flask, render_template, request, redirect, jsonify
 
 
@@ -94,7 +93,7 @@ def calcuation_result():
     print(result)
 
     if result == None:
-        return redirect('/')
+        return render_template('null.html')
 
 
     carrier, freight_rate_min, freight_rate_unit, fuel_rate, valid_date = result
@@ -147,7 +146,7 @@ def manage():
 
         results = cur.fetchall()
 
-        # print(results)
+        print(results)
 
         cur.close()
         conn.close()
@@ -177,16 +176,11 @@ def delete(id):
 # def edit(id):
 
 
-
-
-
 @app.route('/upload_rate', methods=['POST', 'GET'])
 def upload_rate():
 
-    # upload_file = request.files('file')
-    # upload_file.save(secure_filename(upload_file.filename))
+
     if request.method == "POST":
-        # json_response = jsonify({"result": request.get_array(field_name='file')})
         f = request.files['file']
         df = pd.read_excel(f)
         print(df.loc[0,'carrier'])
@@ -204,9 +198,6 @@ def upload_rate():
     conn.commit()
 
     return render_template('addrate.html')
-
-
-
 
 
 if __name__ == '__main__':
