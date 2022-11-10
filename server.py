@@ -7,7 +7,6 @@ import os
 
 
 from flask import Flask, render_template, request, redirect, jsonify
-import flask_excel as excel
 
 
 DB_URL = os.environ.get('DATABASE_URL', 'dbname=freight')
