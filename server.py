@@ -174,6 +174,10 @@ def delete(id):
 
         return redirect('/addrate')
 
+@app.route('/edit/<id>', methods = ['POST','GET'])
+def edit(id):
+    
+
 
 
 
