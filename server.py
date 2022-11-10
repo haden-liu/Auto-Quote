@@ -182,23 +182,29 @@ def upload_rate():
 
     # upload_file = request.files('file')
     # upload_file.save(secure_filename(upload_file.filename))
-    # if request.method == "POST":
-    #     return jsonify({"result": request.get_array(field_name='file')})
+    if request.method == "POST":
+        json_response = jsonify({"result": request.get_array(field_name='file')})
+    
+        json_result = json_response.json()
+        
+        print(json_result)
 
 
-    df = pd.read_excel("Book1.xlsx")
-    print(df)
-    print(df['carrier'][0])
 
-    conn = psycopg2.connect('dbname = freight')
-    cur =conn.cursor()
+        return json_result
+        
+        
+    # print(df['carrier'][0])
 
-    for i in range(len(df)):
+    # conn = psycopg2.connect('dbname = freight')
+    # cur =conn.cursor()
 
-        print(df.loc[i, "carrier"], df.loc[i, "valid_date"])
-        cur.execute('INSERT INTO rates (carrier,freight_rate_min,freight_rate_unit,fuel_rate,loading_port,discharging_port,valid_date) values (%s,%s,%s,%s,%s,%s,%s)', [df.loc[i, "carrier"], float(df.loc[i, "freight_rate_min"]),float(df.loc[i, "freight_rate_unit"]),float(df.loc[i, "fuel_rate"]),df.loc[i, "loading_port"],df.loc[i, "discharging_port"],df.loc[i, "valid_date"]])
+    # for i in range(len(df)):
 
-    conn.commit()
+    #     print(df.loc[i, "carrier"], df.loc[i, "valid_date"])
+    #     cur.execute('INSERT INTO rates (carrier,freight_rate_min,freight_rate_unit,fuel_rate,loading_port,discharging_port,valid_date) values (%s,%s,%s,%s,%s,%s,%s)', [df.loc[i, "carrier"], float(df.loc[i, "freight_rate_min"]),float(df.loc[i, "freight_rate_unit"]),float(df.loc[i, "fuel_rate"]),df.loc[i, "loading_port"],df.loc[i, "discharging_port"],df.loc[i, "valid_date"]])
+
+    # conn.commit()
 
     return render_template('addrate.html')
 
