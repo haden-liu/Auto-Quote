@@ -192,11 +192,6 @@ def upload_rate():
         print(df.loc[0,'carrier'])
     
         
-        
-   
-        
-        
-
 
     conn = psycopg2.connect('dbname = freight')
     cur =conn.cursor()
