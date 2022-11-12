@@ -14,10 +14,15 @@
         <ul>
             <li><a href="calculation">Rate Calculation</a></li>
             <li><a href="addrate">Add Rate</a></li>
+            <li><a href="manage">Manage Rate</a></li>
             <li><a href="contact">Contact</a></li>
         </ul>
     </nav>
 
+    {% if name %}
+
+    <h2>Log in as {{name}}</h2>
+    <button><a href="logout">Logout</a></button>
     <form action="calcuation_result" method = "post">
         <label for="">Port of Loading</label>
         <input type="text" name="loadingport">
@@ -69,5 +74,7 @@
             document.getElementById('newAddedItem').appendChild(newLWH)
         }
     </script>
+
+    {% endif %}
 </body>
 </html>

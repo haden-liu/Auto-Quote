@@ -107,5 +107,20 @@ input[type=text] {
     page-break-inside: avoid;
     page-break-after: auto;
   }
+
+  .login {
+    display: grid;
+  }
+  .login  label {
+    grid-template-columns: 20px;
+    grid-template-rows: 20px;
+
+  }
+
+  .login > input {
+    grid-template-columns: 40px;
+    grid-template-rows: 80px;
+
+  }
   
 
