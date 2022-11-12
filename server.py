@@ -24,7 +24,7 @@ def index():
 def calculation():
     user_id = session.get('user_id')
 
-    conn = psycopg2.connect('dbname=freight')
+    conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
 
     cur.execute('select id, name from users where id = %s', [user_id])
@@ -48,7 +48,7 @@ def calcuation_result():
 
     user_id = session.get('user_id')
 
-    conn = psycopg2.connect('dbname=freight')
+    conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
 
     cur.execute('select id, name from users where id = %s', [user_id])
