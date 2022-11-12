@@ -241,12 +241,12 @@ def upload_rate():
 
     return render_template('addrate.html')
 
-@app.route('/login_action', methods = ['POST'])
+@app.route('/login_action', methods = ['POST', 'GET'])
 def login_action():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    conn = psycopg2.connect('dbname = freight')
+    conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
 
     cur.execute('select id, name, password_hash from users where email = %s', [email])
@@ -254,7 +254,6 @@ def login_action():
     results = cur.fetchone()
     print(results)
 
-    
 
 
     if results:   
@@ -295,7 +294,7 @@ def signup_action():
     # Hash the password - we need to call .decode() to convert to a string to store in the DB.
     password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-    conn = psycopg2.connect('dbname=freight')
+    conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
 
     cur.execute('insert into users (email, name, password_hash) values (%s, %s, %s)', [email, name, password_hash])
